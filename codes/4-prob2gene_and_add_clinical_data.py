@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
-
-
 import re
 import os
 import sys
@@ -13,10 +10,6 @@ import requests
 import numpy as np
 import pandas as pd
 from ipywidgets import widgets
-
-
-# In[ ]:
-
 
 MAIN_DIR = '.'
 DATASETS = ['GSE11121',
@@ -54,24 +47,14 @@ DATASETS = ['GSE11121',
             'GSE102484']
 
 
-# In[ ]:
-
-
 annot = pd.read_csv('prob2gene.csv')
 probe_to_symbol = pd.Series(annot['V2'].values, index=annot['V1']).to_dict()
-
-
-# In[ ]:
-
 
 df = pd.read_csv(f'{MAIN_DIR}/merged/merged_COMBAT_rma.matrix.csv', index_col=0).transpose()    
 df.shape
 
 
 # ### Change the column names to their corresponding genes
-
-# In[ ]:
-
 
 result = []
 for id, row in df.iterrows():
@@ -101,10 +84,6 @@ for id, row in df.iterrows():
 df_genes = pd.DataFrame(result)
 df_genes.head(5)
 
-
-# In[ ]:
-
-
 # deleting AFF 
 unwanted =df_genes.filter(regex='^AFFX')
 df_genes.drop(unwanted, axis=1, inplace=True)
@@ -118,25 +97,15 @@ unwanted = df_genes.filter(regex='---')
 df_genes.drop(unwanted, axis=1, inplace=True)
 df_genes.head(5) 
 
-
-# In[ ]:
-
-
 # selecting 'sample_id' as index
 df_genes =df_genes.set_index('sample_id')
 df_genes.head(5)
-
-
-# In[ ]:
 
 
 df_genes.shape
 
 
 # ## Add clinical data
-
-# In[ ]:
-
 
 df_total = None
 df_clinical_data = pd.DataFrame()
@@ -161,23 +130,11 @@ df_clinical_data = df_clinical_data.replace({'subtype': {' Basal': 'Basal', 'lum
 df_clinical_data = df_clinical_data.replace({'subtype': {'Her2':'HER2', ' Her2': 'HER2'}})
 df_clinical_data = df_clinical_data.replace({'subtype': {'Basal':3, 'HER2':2, 'LumB':1, 'LumA':0 }})
 
-
-# In[ ]:
-
-
 df_clinical_data
-
-
-# In[ ]:
-
 
 # save data as dict 
 with open(f'/data/Elmira_Data/MALANI/cancer_data/clinical_data/clean_data/breast_clinical_data.pkl', 'wb') as fp:
     pickle.dump(df_clinical_data, fp)
-
-
-# In[ ]:
-
 
 # merge clinical data and gene experession
 cancer_GE_Clinical_data = pd.DataFrame()
@@ -187,19 +144,11 @@ cancer_GE_Clinical_data = df_genes.merge(df_all_clinical, on=['sample_id'])
 cancer_GE_Clinical_data = cancer_GE_Clinical_data.drop_duplicates(['sample_id'], keep='last')
 cancer_GE_Clinical_data.shape
 
-
-# In[ ]:
-
-
 # Tumour samples
 indexName = df_all_data[df_all_data['tissue'] == 1].index
 df_all_cancer = df_all_data.loc[indexName]
 df_all_cancer.to_pickle('df_tumour_expression.pkl')
 df_all_cancer.to_csv('df_tumour_expression.csv')
-
-
-# In[ ]:
-
 
 # Normal samples
 indexNames = df_all_data[df_all_data['tissue'] == 0].index

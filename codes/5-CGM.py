@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
-
 
 import random
 import collections
@@ -57,9 +55,6 @@ import matplotlib.pyplot as plt
 from xgboost import XGBClassifier, plot_importance
 
 
-# In[ ]:
-
-
 OUTLIER_DETECTION = 'YES'     # ['YES', 'NO']
 NUM_RUNS = 10
 MAIN_DIR = '.'
@@ -68,15 +63,7 @@ df_final_prediction = None
 plt.rcParams.update({'font.size': 16})
 np.random.seed(40)
 
-
-# In[ ]:
-
-
 df_total = pd.read_pickle(f'{MAIN_DIR}/main_data/tumour_gene_expression_and_clinical.pkl')
-
-
-# In[ ]:
-
 
 def long_rank(df, label):
     T1= df[df[label]==0]['t.rfs']
@@ -85,10 +72,6 @@ def long_rank(df, label):
     T2= df[df[label]==1]['t.rfs']
     E2=df[df[label]==1]['e.rfs']
     return (T1,E1,T2,E2)
-
-
-# In[ ]:
-
 
 def load_analyzed_data_from_R():
     df_total = None
@@ -110,9 +93,6 @@ def load_analyzed_data_from_R():
     df_total_normal.set_index("sample_id")
 
     return df_total_normal, df_total
-
-
-# In[ ]:
 
 
 def clean_data(df_total, num_of_genes_to_select=None):
@@ -160,23 +140,14 @@ def clean_data(df_total, num_of_genes_to_select=None):
     return df_clean
 
 
-# In[ ]:
-
-
 def read_input(num_of_genes_to_select=None):
     df_total_normal, df_total = load_analyzed_data_from_R()
     
     return clean_data(df_total_normal, num_of_genes_to_select), clean_data(df_total, num_of_genes_to_select)
 
 
-# In[ ]:
-
-
 df_total_normal, df_total = load_analyzed_data_from_R()
 df_clean_normal, df = read_input()
-
-
-# In[ ]:
 
 
 # cleaning data
@@ -202,16 +173,10 @@ df_total['subtype'] = pd.to_numeric(df_total['subtype'])
 
 # ### Developing ML model 
 
-# In[ ]:
-
-
 # CGM biomarkers
 with open(f'{MAIN_DIR}/main_data/CGM_biomarkers.pkl', 'rb') as f:
     all_genes = pickle.load(f)
 best_CGM = all_genes[:70]
-
-
-# In[ ]:
 
 
 # prediction dataset (grade 2 and unknown grade samples )
@@ -224,10 +189,7 @@ df_developmental = df_3_1[selected_features]
 df_prediction = df_2_unkown[selected_features]
 
 
-# ## Function
-
-# In[ ]:
-
+### Function
 
 def perform_outlier_detection(X, X_val):
     if OUTLIER_DETECTION == 'YES':
@@ -270,16 +232,9 @@ def perform_outlier_detection(X, X_val):
         return None, None, None
 
 
-# In[ ]:
-
-
 def cross_validate(model, X, y, NUM_RUNS):
     cv_results = cross_validate(model, X, y, cv=NUM_RUNS)
     return cv_results
-
-
-# In[ ]:
-
 
 def balance_df(X, y, random_state):
     print(f"Before Balancing, counts of label '1': {sum(y == 1)}")
@@ -297,9 +252,6 @@ def balance_df(X, y, random_state):
     print(f"After Balancing, counts of label '0': {sum(y_res == 0)}")
 
     return pd.DataFrame(X_res, columns=saved_cols), pd.Series(y_res)
-
-
-# In[ ]:
 
 
 def select_k_best(X, y, num_features, fs):
@@ -343,9 +295,6 @@ def select_lasso(X_filtered, y):
     # Selecting important genes in test set: X_test_new
     # X_test_new = X_test_Normalized[np.intersect1d(X_test_Normalized.columns, new_features)]
     return len(new_features), new_features, X_new
-
-
-# In[ ]:
 
 
 def calculate_metrics(y, y_pred):
@@ -415,10 +364,6 @@ def plot_learning_curve(model):
     pyplot.ylabel('Classification Error')
     pyplot.title('XGBoost Classification Error')
     pyplot.show()
-
-
-# In[ ]:
-
 
 def run_all(df):
     scoring = ['precision_macro', 'recall_macro']
@@ -514,28 +459,14 @@ def run_all(df):
     return test_df, test_results, best_model, best_accuracy
 
 
-# In[ ]:
-
-
 test_df, test_results, best_model, best_accuracy = run_all(df_developmental)
 
-
-# In[ ]:
-
-
 df_test_results = pd.DataFrame(test_results)
-
-
-# In[ ]:
-
 
 df_test_results['f1_score'].mean()
 
 
 # ## Feature importance
-
-# In[ ]:
-
 
 all_top_features_weight = collections.defaultdict(int)
 for run in df_test_results['top_features_weight']:
@@ -547,10 +478,6 @@ df_weight = pd.DataFrame(sorted_features_lst_weight)
 df_weight.columns = ['gene', 'weight']
 df_weight.set_index('gene', inplace=True)
 
-
-# In[ ]:
-
-
 all_top_features_gain = collections.defaultdict(int)
 for run in df_test_results['top_features_gain']:
     for gene, metric in run.items():
@@ -560,10 +487,6 @@ sorted_features_lst_gain = sorted(all_top_features_gain.items(), key=lambda kv: 
 df_gain = pd.DataFrame(sorted_features_lst_gain)
 df_gain.columns = ['gene', 'gain']
 df_gain.set_index('gene', inplace=True)
-
-
-# In[ ]:
-
 
 all_top_features_cover = collections.defaultdict(int)
 for run in df_test_results['top_features_cover']:
@@ -576,16 +499,9 @@ df_cover.columns = ['gene', 'cover']
 df_cover.set_index('gene', inplace=True)
 
 
-# In[ ]:
-
-
 df_total = pd.merge(df_weight, df_gain, left_index=True, right_index=True)
 df_total = pd.merge(df_total, df_cover, left_index=True, right_index=True)
 df_total.head()
-
-
-# In[ ]:
-
 
 # shap is for grade2 and unkown howeve we do it here
 shap.initjs()
