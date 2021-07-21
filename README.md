@@ -5,7 +5,8 @@
 2 St. John’s Institute of Dermatology, School of Basic & Medical Biosciences, King’s College London, & NIHR Biomedical Research Centre at Guy’s and St. Thomas’ Hospitals and King’s College London, Guy’s Hospital, King’s College London, London SE1 9RT, United Kingdom <br />
 3 Breast Cancer Now Research Unit, School of Cancer & Pharmaceutical Sciences, King’s College London, Guy’s Cancer Centre, London SE1 9RT, United Kingdom <br />
 
-<sub> ***British Journal of Cancer*** (2021) | https://www.nature.com/articles/s41416-021-01455-1
+<sub> ***British Journal of Cancer*** (2021) | https://www.nature.com/articles/s41416-021-01455-1 <br />
+
  
   
   
@@ -19,3 +20,12 @@
 <sub>__Results:__ A 70-gene signature for assessing clinical risk was identified and was shown to be 90% accurate when tested on known histological-grade samples. The predictive framework was validated through survival analysis and showed robust prognostic performance. CGM was cross-referenced with existing genomic tests and demonstrated the competitive predictive power of tumour risk.<br />
   
 <sub>__Conclusions:__ CGM is able to classify tumours into better-defined prognostic categories without employing information on tumour size, stage, or subgroups. The model offers means to improve prognosis and support the clinical decision and precision treatments, thereby potentially contributing to preventing underdiagnosis of high-risk tumours and minimising over-treatment of low-risk disease.<br />
+
+    
+      
+     
+
+## <sub> __Cite this article__
+- <sub> Amiri Souri, E., Chenoweth, A., Cheung, A. et al. Cancer Grade Model: a multi-gene machine learning-based risk classification for improving prognosis in breast cancer. Br J Cancer (2021). https://doi.org/10.1038/s41416-021-01455-1 <br />
+
+   [Download citation](https://citation-needed.springer.com/v2/references/10.1038/s41416-021-01455-1?format=refman&flavour=citation)
