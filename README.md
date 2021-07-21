@@ -5,11 +5,8 @@
 2 St. John’s Institute of Dermatology, School of Basic & Medical Biosciences, King’s College London, & NIHR Biomedical Research Centre at Guy’s and St. Thomas’ Hospitals and King’s College London, Guy’s Hospital, King’s College London, London SE1 9RT, United Kingdom <br />
 3 Breast Cancer Now Research Unit, School of Cancer & Pharmaceutical Sciences, King’s College London, Guy’s Cancer Centre, London SE1 9RT, United Kingdom <br />
 
-<sub> ***British Journal of Cancer*** (2021) | https://www.nature.com/articles/s41416-021-01455-1 <br />
-
+<sub> ***British Journal of Cancer*** (2021) | https://www.nature.com/articles/s41416-021-01455-1 
  
-  
-  
 --------------------------------
   
 ### Abstract
